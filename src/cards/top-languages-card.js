@@ -14,7 +14,7 @@ import { langCardLocales } from "../translations.js";
 
 const DEFAULT_CARD_WIDTH = 300;
 const MIN_CARD_WIDTH = 280;
-const DEFAULT_LANG_COLOR = "#858585";
+const DEFAULT_LANG_COLOR = "#00ff1b";
 const CARD_PADDING = 25;
 const COMPACT_LAYOUT_BASE_HEIGHT = 90;
 const MAXIMUM_LANGS_COUNT = 20;
@@ -24,6 +24,38 @@ const COMPACT_LAYOUT_DEFAULT_LANGS_COUNT = 6;
 const DONUT_LAYOUT_DEFAULT_LANGS_COUNT = 5;
 const PIE_LAYOUT_DEFAULT_LANGS_COUNT = 6;
 const DONUT_VERTICAL_LAYOUT_DEFAULT_LANGS_COUNT = 6;
+
+/** Return Language color */
+
+// une fonction qui prend en paramètre le nom du langage et retourne sa couleur
+const thecolorof = (lang) => {
+  switch (lang) {
+    case "html":
+      return "#E34F26";
+    case "css":
+      return "#1572B6";
+    case "javascript":
+      return "#F7DF1E";
+    case "python":
+      return "#ffdd54";
+    case "java":
+      return "#ED8B00";
+    case "c":
+      return "#03599C";
+    case "nodejs":
+      return "#026e00";
+    case "sql":
+      return "#008bb9";
+    case "ocaml":
+      return "#23E98407";
+    case "javascript":
+      return "#F7DF1E";
+      case "tex":
+      return "#008080";
+    default:
+      return DEFAULT_LANG_COLOR;
+  }
+};
 
 /**
  * @typedef {import("../fetchers/types").Lang} Lang
@@ -243,7 +275,7 @@ const createProgressTextNode = ({ width, color, name, progress, index }) => {
 const createCompactLangNode = ({ lang, totalSize, hideProgress, index }) => {
   const percentage = ((lang.size / totalSize) * 100).toFixed(2);
   const staggerDelay = (index + 3) * 150;
-  const color = lang.color || "#858585";
+  const color = ( thecolorof(lang.name) === DEFAULT_LANG_COLOR ? lang.color : thecolorof(lang.name));
 
   return `
     <g class="stagger" style="animation-delay: ${staggerDelay}ms">
@@ -330,7 +362,7 @@ const renderNormalLayout = (langs, width, totalLanguageSize) => {
       return createProgressTextNode({
         width,
         name: lang.name,
-        color: lang.color || DEFAULT_LANG_COLOR,
+        color: ( thecolorof(lang.name) === DEFAULT_LANG_COLOR ? lang.color : thecolorof(lang.name)),
         progress: parseFloat(
           ((lang.size / totalLanguageSize) * 100).toFixed(2),
         ),
@@ -373,7 +405,7 @@ const renderCompactLayout = (langs, width, totalLanguageSize, hideProgress) => {
           y="0"
           width="${progress}"
           height="8"
-          fill="${lang.color || "#858585"}"
+          fill="${( thecolorof(lang.name) === DEFAULT_LANG_COLOR ? lang.color : thecolorof(lang.name))}"
         />
       `;
       progressOffset += percentage;
@@ -436,7 +468,7 @@ const renderDonutVerticalLayout = (langs, totalLanguageSize) => {
           cy="100"
           r="${radius}"
           fill="transparent"
-          stroke="${lang.color}"
+          stroke="${( thecolorof(lang.name) === DEFAULT_LANG_COLOR ? lang.color : thecolorof(lang.name))}"
           stroke-width="25"
           stroke-dasharray="${totalCircleLength}"
           stroke-dashoffset="${indent}"
@@ -503,7 +535,7 @@ const renderPieLayout = (langs, totalLanguageSize) => {
           cy="${centerY}"
           r="${radius}"
           stroke="none"
-          fill="${lang.color}"
+          fill="${( thecolorof(lang.name) === DEFAULT_LANG_COLOR ? lang.color : thecolorof(lang.name))}"
           data-testid="lang-pie"
           size="100"
         />
@@ -536,7 +568,7 @@ const renderPieLayout = (langs, totalLanguageSize) => {
           data-testid="lang-pie"
           size="${percentage}"
           d="M ${centerX} ${centerY} L ${startPoint.x} ${startPoint.y} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endPoint.x} ${endPoint.y} Z"
-          fill="${lang.color}"
+          fill="${( thecolorof(lang.name) === DEFAULT_LANG_COLOR ? lang.color : thecolorof(lang.name))}"
         />
       </g>
     `);
@@ -618,7 +650,7 @@ const renderDonutLayout = (langs, width, totalLanguageSize) => {
   const radius = centerX - 60;
   const strokeWidth = 12;
 
-  const colors = langs.map((lang) => lang.color);
+  const colors = langs.map((lang) => ( thecolorof(lang.name) === DEFAULT_LANG_COLOR ? lang.color : thecolorof(lang.name)));
   const langsPercents = langs.map((lang) =>
     parseFloat(((lang.size / totalLanguageSize) * 100).toFixed(2)),
   );

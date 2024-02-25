@@ -462,6 +462,24 @@ export const themes = {
     icon_color: "ffffff",
     bg_color: "35,4158d0,c850c0,ffcc70",
   },
+  kmzx: {
+    title_color: "00ff1b",
+    icon_color: "00ff1b",
+    text_color: "ffffff",
+    bg_color: "191A1B",
+  },
+  aoba_josai: {
+    title_color: "79c6c6",
+    icon_color: "79c6c6",
+    text_color: "40e0d0",
+    bg_color: "343434",
+  },
+  karasuno: {
+    title_color: "ff7b00",
+    icon_color: "ff7b00",
+    text_color: "ffffff",
+    bg_color: "373644",
+  },
 };
 
 export default themes;
